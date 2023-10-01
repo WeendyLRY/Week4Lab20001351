@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+
+.zoom {
+    zoom: 2;
+    -moz-transform: scale(2);
+    -moz-transform-origin: 0 0;
+}
+
+.line {
+  fill: none;
+  stroke: rgb(186, 0, 106);
+  stroke-width: 2px;
+}
+
+.container-wrapper_bot-most,
+.container-wrapper_bot-most-2,
+.container-wrapper_top
+{
+    margin-top: 22px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: auto; /* Set the container wrapper to full viewport height */
+    background-color: #ebebeb;
+    width: 100%;
+    
+}
+
+.container-wrapper_bot{
+    margin-top: 12px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: auto; /* Set the container wrapper to full viewport height */
+    background-color: #ebebeb;
+    width: 100%;
+}
+
+.container-wrapper 
+{
+    padding-top: auto; /* Add padding to separate the graph from the container edges */
+    margin-top: auto;
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; /* Set the container wrapper to full viewport height */
+}
+
+.container_lesson_1 {
+    width: 100%; /* Set the width as needed */
+    margin-top: 80px;
+    max-width: 500px;
+    height: 400px; /* Set the height as needed */
+    background-color: #eec8ee;
+    border-radius: 20px; /* Adjust the radius for rounded corners */
+    padding: 20px 20px 80px 30px; /* Add padding to separate the graph from the container edges */
+
+}
+
+.container_lesson_2 {
+    width: 100%; /* Set the width as needed */
+    margin-top: 80px;
+    max-width: 500px;
+    height: 400px; /* Set the height as needed */
+    background-color: #91eae7;
+    border-radius: 20px; /* Adjust the radius for rounded corners */
+   
+    padding: 20px 20px 80px 30px; /* Add padding to separate the graph from the container edges */
+}
+
+.container_lesson_3 {
+    width: 100%; /* Set the width as needed */
+    margin-top: 80px;
+    max-width: 500px;
+    height: 400px; /* Set the height as needed */
+    background-color: #f6f0bb;
+    border-radius: 20px; /* Adjust the radius for rounded corners */
+    padding: 20px 20px 30px 30px; /* Add padding to separate the graph from the container edges */
+    padding: 20px 20px 80px 30px; /* Add padding to separate the graph from the container edges */
+}
+
+
+.grouped_data_modified_lesson_2 {
+    width: 1500px; /* Set the width as needed */
+    margin-top: 100px;
+    max-width: 500px;
+    height: 400px; /* Set the height as needed */
+    background-color: #d9fad9;
+    border-radius: 20px; /* Adjust the radius for rounded corners */
+    padding-top: 100px 20px 80px 30px; /* Add padding to separate the graph from the container edges */
+    justify-content: center;
+}
+
+.google_modified_lesson_2,
+.amazon_modified_lesson_2,
+.microsoft_modified_lesson_2,
+.ibm_modified_lesson_2,
+.facebook_modified_lesson_2,
+.apple_modified_lesson_2 {
+    width: 600px; /* Set the width as needed */
+    margin-top: 150px;
+    max-width: 500px;
+    height: 400px; /* Set the height as needed */
+    border-radius: 20px; /* Adjust the radius for rounded corners */
+    padding: 20px 20px 80px 30px; /* Add padding to separate the graph from the container edges */
+}
+
+</style>
+
+<body>
+    <div class = "container-wrapper">
+        
+        <div class = "container-wrapper_top">
+            
+            <div class = "container_lesson_1">
+                <p style="font-size: 16px; text-align: center;">Lesson_1 (Unmodified) </p>
+                <div id="lesson_1"></div> 
+                <div id="lesson_1_text"><p>The stock price has an increasing trend.</p>
+                </p></div> 
+            </div>
+            <div class = "container_lesson_2">
+                <p style="font-size: 16px; text-align: center;">Lesson_2 (Unmodified)</p>
+                <div id="lesson_2"></div>
+                <div id="lesson_1_text"><p>This graph allows us to see the overview
+                    and comparison of trend between all the stocks in the tech industry
+                    by just looking at one single graph, as opposed to the the smaller graphs.
+                </p>
+                </div> 
+            </div>
+            <div class = "container_lesson_3" style="padding-top: 10px; padding-bottom: 30px;">
+                <p style="font-size: 16px; text-align: center;">Lesson_2 (Unmodified)</p>
+                <div id="lesson_3" style="align-items: center;" ></div>
+                    <p>There is a significant decrease of stock prices.</p>
+                        
+                </div>
+            </div>
+        </div>
+
+        <div class = "container-wrapper_bot" style="height: 600px; margin-top:10px; padding-bottom: 100px;" >           
+            <div class = "grouped_data_modified_lesson_2" style = "width: 1200px">
+                <p style="font-size: 16px; text-align: center;"> Grouped Data </p>
+                <div id="lesson_4" style = "width: 1000px; max-width: 1000px; position:sticky;" ></div>
+                <div id="lesson_2_text"><p>This gives an overview of the stock data. The similar scale along
+                    all stocks allow us to make direct comparison along all stocks. It also allows us to see an overview
+                    of all stocks and their trends. Hence, we can compare their trends.
+                    
+                </p>
+                </p></div> 
+            </div>
+        </div>
+
+        <div class = "container-wrapper_bot-most">           
+            <div class = "apple_modified_lesson_2" style="background-color: #eec8ee;">
+                <p style="font-size: 16px; text-align: center;"> Apple </p>
+                <div id="apple__modified_grouped_data"></div> 
+                <div id="apple_text"><p>Stock price increases before dropping abruptly.</p>
+                </p></div> 
+            </div>
+
+            <div class = "google_modified_lesson_2" style="background-color: #91eae7;">
+                <p style="font-size: 16px; text-align: center;"> Google </p>
+                <div id="google__modified_grouped_data"></div> 
+                <div id="google_text"><p>Stock price increase steadily.</p>
+                </p></div> 
+            </div>
+
+            <div class = "amazon_modified_lesson_2" style="background-color: #f6f0bb;">
+                <p style="font-size: 16px; text-align: center;">  Amazon </p>
+                <div id="amazon__modified_grouped_data"></div> 
+                <div id="apple_text"><p>Stock price increase steadily.</p>
+                </p></div> 
+            </div>
+            
+        </div>
+        
+        <div class = "container-wrapper_bot-most-2">           
+            <div class = "microsoft_modified_lesson_2" style="background-color: #eec8ee;">
+                <p style="font-size: 16px; text-align: center;"> Microsoft </p>
+                <div id="microsoft__modified_grouped_data"></div> 
+                <div id="apple_text"><p>Stock price decrease steadily before plateauing.</p>
+                </p></div> 
+            </div>
+
+            <div class = "ibm_modified_lesson_2" style="background-color: #91eae7;">
+                <p style="font-size: 16px; text-align: center;"> IBM </p>
+                <div id="ibm__modified_grouped_data"></div> 
+                <div id="IBM_text"><p>A drastic increase before a slight decrease.</p>
+                </p></div> 
+            </div>
+
+            <div class = "facebook_modified_lesson_2" style="background-color: #f6f0bb;">
+                <p style="font-size: 16px; text-align: center;"> Facebook </p>
+                <div id="facebook__modified_grouped_data"></div> 
+                <div id="facebook_text"><p>Stock price is stagnant and directly increase.</p>
+                </p></div> 
+            </div>
+            
+        </div>
+
+        
+       
+    </div>
+
+    <!-- <div class = "grouped_data_modified_lesson_2"
+                    <p style="font-size: 16px; text-align: center;">Lesson_2_Second_Style (Unmodified)</p>
+            <div id="lesson_2_modified_grouped_data"></div> -->
+
+    <script>
+
+    // ******************************
+    // ******************************
+    // ******************************
+    // **********first graph********
+    // ******************************
+    // ******************************
+    // ******************************
+       
+    // set the dimensions and margins of the graph
+        var margin = {top: 10, right: 30, bottom: 30, left: 60},
+            width = 1560 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+
+            // // define the line
+            // var valueline = d3.line()
+            //     .x(function(d) { return x(d.date); })
+            //     .y(function(d) { return y(d.value); });
+
+            // append the svg obgect to the body of the page
+            // appends a 'group' element to 'svg'
+            // moves the 'group' element to the top left margin
+        var svg = d3.select("#lesson_1").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+        //get the data
+        d3.csv("3_TwoNumOrdered_comma.csv")
+            .then(function(data) {
+                console.log("Data loaded:", data); // Log the loaded data
+
+            // format the data
+                data.forEach(function(d) {
+                    d.date = d3.timeParse("%Y-%m-%d")(d.date);
+                    d.value = +d.value;
+                    // Handle parsing errors
+                if (isNaN(d.date) || isNaN(d.value)) {
+                    console.log("Error parsing date or value:", d);
+                }
+            });
+
+            // add x axis
+            // if doesnt work, try putting domain before range like in given example
+            var x = d3.scaleTime()
+            .range([0, width])
+            .domain(d3.extent(data, function(d) { return d.date; }));
+            svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+            // add y-axis
+            var y = d3.scaleLinear()
+            .range([height, 0])
+            .domain([0, d3.max(data, function(d) { return d.value; })])
+            svg.append("g")
+            .call(d3.axisLeft(y));
+
+            // add the line and close the scripts
+            svg.append("path")
+            .data([data])
+            .attr("class", "line")
+            .attr("d", d3.line()
+                .x(function(d) { return x(d.date); })
+                .y(function(d) { return y(d.value); }));
+
+                // Add x-axis label
+            svg.append("text")
+                .attr("class", "x-axis-label")
+                .attr("text-anchor", "middle") // Center-align the text
+                .attr("x", width / 2)
+                .attr("y", height + 30) // Position below the x-axis
+                .text("Date");
+
+            // Add y-axis label
+            svg.append("text")
+                .attr("class", "y-axis-label")
+                .attr("text-anchor", "middle") // Center-align the text
+                .attr("x", -height / 2) // Rotate and position on the left side
+                .attr("y", -40)
+                .attr("transform", "rotate(-90)") // Rotate the label
+                .text("Close Price");
+
+            // Add title
+            svg.append("text")
+                    .attr("x", width / 2)
+                    .attr("y", -10)
+                    .attr("text-anchor", "middle")
+                    .style("font-size", "32px")
+                    .style("fill", "black")
+                    .text("Lesson 1");
+                })
+                    .catch(function(error) {
+                        console.error("Error loading CSV:", error);
+                    });
+    
+    // ******************************
+    // ******************************
+    // ******************************
+    // **********second graph********
+    // ******************************
+    // ******************************
+    // ******************************
+
+      // set the dimensions and margins of the graph
+        var margin = {top: 10, right: 30, bottom: 30, left: 60},
+            width = 460 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+
+        var svg2 = d3.select("#lesson_2").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
+
+        //get the data
+        d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/5_OneCatSevNumOrdered.csv")
+            .then(function(data) {
+                console.log("Data loaded:", data); // Log the loaded data
+                var sumstat = d3.group(data, d=> d.name);
+            
+            // format the data
+            data.forEach(function(d) {
+                    d.date = d3.timeParse("%Y")(d.year);
+                    d.n = +d.n;
+                    // Handle parsing errors
+                if (isNaN(d.year) || isNaN(d.n)) {
+                    console.log("Error parsing date or value:", d);
+                }
+            });
+                
+                
+
+        // add x-axis
+            var x = d3.scaleTime()
+                .range([0, width])
+                .domain(d3.extent(data, function(d) { return d.year; }));
+                svg2.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x).ticks(5));
+
+            // add y-axis
+            var y = d3.scaleTime()
+                .range([height, 0])
+                .domain([0, d3.max(data, function(d) { return +d.n; })])
+                svg2.append("g")
+                .call(d3.axisLeft(y));
+
+            
+            // **draw the line**
+
+            // define a color scale
+            var color = d3.scaleOrdinal()
+                .domain(Array.from(sumstat.keys())) // Assuming sumstat is a Map
+                .range(d3.schemeCategory10); // You can choose a different color scheme
+
+            // convert sumstat to an array of arrays
+            var sumstatArray = Array.from(sumstat);
+
+            // create lines using the data
+            svg2.selectAll("path.line")
+                .data(sumstatArray)
+                .join("path")
+                .attr("class", "line")
+                .attr("fill", "none")
+                .style("stroke", function(d) { return color(d[0]); })
+                .attr("stroke-width", 1.5)
+                .attr("d", function(d) {
+                    return d3.line()
+                        .x(function(d) { return x(d.year); })
+                        .y(function(d) { return y(+d.n); })
+                        (d[1]);
+                    });
+            
+            // Add x-axis label
+            svg2.append("text")
+                .attr("class", "x-axis-label")
+                .attr("text-anchor", "middle") // Center-align the text
+                .attr("x", width / 2)
+                .attr("y", height + 30) // Position below the x-axis
+                .text("Year");
+            
+            // Add y-axis label
+            svg2.append("text")
+                .attr("class", "y-axis-label")
+                .attr("text-anchor", "middle") // Center-align the text
+                .attr("x", -height / 2) // Rotate and position on the left side
+                .attr("y", -40)
+                .attr("transform", "rotate(-90)") // Rotate the label
+                .text("Property Value(?)");
+
+            // Add title
+            svg.append("text")
+                    .attr("x", width / 2)
+                    .attr("y", -10)
+                    .attr("text-anchor", "middle")
+                    .style("font-size", "32px")
+                    .style("fill", "black")
+                    .text("Lesson 1");
+            
+
+                            
+            })
+                .catch(function(error) {
+                    console.error("Error loading CSV:", error);
+                });
+    
+    // ******************************
+    // ******************************
+    // ******************************
+    // **********third  graph********
+    // ******************************
+    // ******************************
+    // ******************************
+
+    // set the dimensions and margins of the graph
+
+
+    
+    // parse the date / time
+    var parseTime = d3.timeParse("%d-%b-%y");
+
+    // append the svg obgect to the body of the page
+    // appends a 'group' element to 'svg'
+    // moves the 'group' element to the top left margin
+    var svg3 = d3.select("#lesson_3").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+    // load data
+    d3.csv("stock_data.csv")
+    .then(function(data) {
+        
+        // format data
+        
+        data.forEach(function(d) {
+            d.date = parseTime(d.date);
+            d.closes = +d.closes;
+            d.open = +d.open;
+        });
+
+           // set the ranges
+    var x = d3.scaleTime().range([0, width]);
+    var y = d3.scaleLinear().range([height, 0]);
+
+    // define the line
+    var valueline_closes = d3.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.closes); });
+
+    var valueline_open = d3.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.open); });
+
+         // Scale the range of the data
+        x.domain(d3.extent(data, function(d) { return d.date; }));
+        y.domain([0, d3.max(data, function(d) { 
+            return Math.max(d.closes, d.open); })]);
+
+        // Add the valueline path.
+        // add lines
+
+        // add valueline_open
+        svg3.append("path")
+            .data([data])
+            .attr("class", "line")
+            .attr("d", valueline_closes);
+
+        // add valueline_closes
+        svg3.append("path")
+            .data([data])
+            .attr("class", "line")
+            .style("stroke", "red")
+            .attr("d", valueline_open);
+
+        // add the x-axis and y-axis
+
+        // Add the X Axis
+        svg3.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .style("font-size", "6");
+
+        // Add the Y Axis
+        svg3.append("g")
+        .call(d3.axisLeft(y))
+        .style("font-size", "8");
+        
+
+        
+    })
+    .catch(function(error) {
+        console.error("Error loading CSV:", error);
+    });
+
+    var grouped_data_path = "https://gist.githubusercontent.com/benlcollins/2d7fb36cd0c295c00882/raw/6776a4cf60432d1e325d09dc6cddcd5d62405d26/stock_data.csv";
+
+    ////**** fourth graph*****/////
+
+
+    // Parse the date/time
+var parseTime2 = d3.timeParse("%Y-%m-%d");
+
+// Set the dimensions and margins of the graph
+var margin = { top: 20, right: 50, bottom: 50, left: 70 },
+    width = 500 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// Append the SVG object to the body of the page
+var svg4 = d3.select("#lesson_4")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// Load data from the CSV file
+d3.csv(grouped_data_path)
+    .then(function (data) {
+        // Format data
+        data.forEach(function (d) {
+            d.date = parseTime2(d.date);
+            d.Apple = +d.Apple;
+            d.Google = +d.Google;
+            d.Amazon = +d.Amazon;
+            d.Microsoft = +d.Microsoft;
+            d.IBM = +d.IBM;
+            d.Facebook = +d.Facebook;
+        });
+
+        // Set the scales
+        var x = d3.scaleTime().range([0, width]);
+        var y = d3.scaleLinear().range([height, 0]);
+
+        // Define line functions for each company
+        var valueline_Apple = d3.line()
+            .x(function (d) { return x(d.date); })
+            .y(function (d) { return y(d.Apple); });
+
+        var valueline_Google = d3.line()
+            .x(function (d) { return x(d.date); })
+            .y(function (d) { return y(d.Google); });
+
+        var valueline_Amazon = d3.line()
+            .x(function (d) { return x(d.date); })
+            .y(function (d) { return y(d.Amazon); });
+
+        var valueline_Microsoft = d3.line()
+            .x(function (d) { return x(d.date); })
+            .y(function (d) { return y(d.Microsoft); });
+
+        var valueline_IBM = d3.line()
+            .x(function (d) { return x(d.date); })
+            .y(function (d) { return y(d.IBM); });
+
+        var valueline_Facebook = d3.line()
+            .x(function (d) { return x(d.date); })
+            .y(function (d) { return y(d.Facebook); });
+
+        // Set the domains for scales
+        x.domain(d3.extent(data, function (d) { return d.date; }));
+        y.domain([0, d3.max(data, function (d) {
+            return Math.max(d.Apple, d.Google, d.Amazon, d.Microsoft, d.IBM, d.Facebook);
+        })]);
+
+        // Append the valueline paths
+        svg4.append("path")
+            .data([data])
+            .attr("class", "line")
+            .attr("d", valueline_Apple);
+
+        svg4.append("path")
+            .data([data])
+            .attr("class", "line")
+            .style("stroke", "red")
+            .attr("d", valueline_Google);
+
+        svg4.append("path")
+            .data([data])
+            .attr("class", "line")
+            .style("stroke", "blue")
+            .attr("d", valueline_Amazon);
+
+        svg4.append("path")
+            .data([data])
+            .attr("class", "line")
+            .style("stroke", "green")
+            .attr("d", valueline_Microsoft);
+
+        svg4.append("path")
+            .data([data])
+            .attr("class", "line")
+            .style("stroke", "#800080")
+            .attr("d", valueline_IBM);
+
+        svg4.append("path")
+            .data([data])
+            .attr("class", "line")
+            .style("stroke", "#BB830C")
+            .attr("d", valueline_Facebook);
+
+        // Append the X Axis
+        svg4.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x))
+            .style("font-size", "12");
+
+        // Append the Y Axis
+        svg4.append("g")
+            .call(d3.axisLeft(y))
+            .style("font-size", "12");
+
+        // Title
+        svg4.append("text")
+            .attr("x", width / 2)
+            .attr("y", -margin.top / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16")
+            .text("Stock Prices Over Time");
+
+        // Legend
+        var legend = svg4.append("g")
+            .attr("class", "legend")
+            .attr("transform", "translate(" + (width - 150) + "," + 10 + ")");
+
+        var companies = ["Apple", "Google", "Amazon", "Microsoft", "IBM", "Facebook"];
+
+        companies.forEach(function (company, i) {
+            legend.append("rect")
+                .attr("x", 0)
+                .attr("y", i * 20)
+                .attr("width", 12)
+                .attr("height", 12)
+                .style("fill", d3.schemeCategory10[i]);
+
+            legend.append("text")
+                .attr("x", 20)
+                .attr("y", i * 20 + 10)
+                .style("font-size", "12")
+                .text(company);
+        });
+    })
+    .catch(function (error) {
+        console.error("Error loading CSV:", error);
+    });
+
+    //fifth graph: facebook//
+
+     
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg5 = d3.select("#apple__modified_grouped_data").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+      "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+// load data
+d3.csv(grouped_data_path)
+.then(function(data) {
+    
+    // format data
+    data.forEach(function(d) {
+        d.date = parseTime2(d.date);
+        d.Apple = +d.Apple;
+    });
+    
+    // set the ranges
+    var x = d3.scaleTime().range([0, width]);
+    var y = d3.scaleLinear().range([height, 0]);
+
+
+var valueline_Apple = d3.line()
+.x(function(d) { return x(d.date); })
+.y(function(d) { return y(d.Apple); });
+
+     // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, d3.max(data, function(d){ return d.Apple; })]);
+
+    // Add the valueline path.
+    // add lines
+
+    // add valueline_open
+    svg5.append("path")
+        .data([data])
+        .attr("class", "line")
+        .attr("d", valueline_Apple);
+
+    // add the x-axis and y-axis
+
+    // Add the X Axis
+    svg5.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x))
+    .style("font-size", "6");
+
+    // Add the Y Axis
+    svg5.append("g")
+    .call(d3.axisLeft(y))
+    .style("font-size", "8");
+
+    // Title
+    svg5.append("text")
+            .attr("x", width / 2)
+            .attr("y", -margin.top / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16")
+            .text("Apple Stock Prices Over Time");
+
+        // X Label
+        svg5.append("text")
+            .attr("x", width / 2)
+            .attr("y", height + margin.bottom / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "12")
+            .text("Date");
+
+        // Y Label
+        svg5.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -height / 2)
+            .attr("y", -margin.left)
+            .attr("dy", "1em")
+            .style("font-size", "12")
+            .text("Stock Price");
+    
+
+    
+})
+.catch(function(error) {
+    console.error("Error loading CSV:", error);
+});
+
+////end of apple/////
+
+
+
+ //fifth graph//
+ //google//
+
+     
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg6 = d3.select("#google__modified_grouped_data").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+      "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+// load data
+d3.csv(grouped_data_path)
+.then(function(data) {
+    
+    // format data
+    data.forEach(function(d) {
+        d.date = parseTime2(d.date);
+        d.Apple = +d.Apple;
+    });
+    
+    // set the ranges
+    var x = d3.scaleTime().range([0, width]);
+    var y = d3.scaleLinear().range([height, 0]);
+
+
+var valueline_Google = d3.line()
+.x(function(d) { return x(d.date); })
+.y(function(d) { return y(d.Google); });
+
+     // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, d3.max(data, function(d){ return d.Google; })]);
+
+    // Add the valueline path.
+    // add lines
+
+    // add valueline_open
+    svg6.append("path")
+        .data([data])
+        .attr("class", "line")
+        .style("stroke", "red")
+        .attr("d", valueline_Google);
+
+    // add the x-axis and y-axis
+
+    // Add the X Axis
+    svg6.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x))
+    .style("font-size", "6");
+
+    // Add the Y Axis
+    svg6.append("g")
+    .call(d3.axisLeft(y))
+    .style("font-size", "8");
+
+    // Title
+    svg6.append("text")
+            .attr("x", width / 2)
+            .attr("y", -margin.top / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16")
+            .text("Google Stock Prices Over Time");
+
+        // X Label
+        svg6.append("text")
+            .attr("x", width / 2)
+            .attr("y", height + margin.bottom / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "12")
+            .text("Date");
+
+        // Y Label
+        svg6.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -height / 2)
+            .attr("y", -margin.left)
+            .attr("dy", "1em")
+            .style("font-size", "12")
+            .text("Stock Price");
+    
+
+    
+})
+.catch(function(error) {
+    console.error("Error loading CSV:", error);
+});
+
+////end of google/////
+
+
+
+ //fifth graph//
+ //amazon_svg7//
+
+     
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg7 = d3.select("#amazon__modified_grouped_data").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+      "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+// load data
+d3.csv(grouped_data_path)
+.then(function(data) {
+    
+    // format data
+    data.forEach(function(d) {
+        d.date = parseTime2(d.date);
+        d.Amazon = +d.Amazon;
+    });
+    
+    // set the ranges
+    var x = d3.scaleTime().range([0, width]);
+    var y = d3.scaleLinear().range([height, 0]);
+
+
+var valueline_Amazon = d3.line()
+.x(function(d) { return x(d.date); })
+.y(function(d) { return y(d.Amazon); });
+
+     // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, d3.max(data, function(d){ return d.Amazon; })]);
+
+    // Add the valueline path.
+    // add lines
+
+    // add valueline_open
+    svg7.append("path")
+        .data([data])
+        .attr("class", "line")
+        .style("stroke", "blue")
+        .attr("d", valueline_Amazon);
+
+    // add the x-axis and y-axis
+
+    // Add the X Axis
+    svg7.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x))
+    .style("font-size", "6");
+
+    // Add the Y Axis
+    svg7.append("g")
+    .call(d3.axisLeft(y))
+    .style("font-size", "8");
+
+    // Title
+    svg7.append("text")
+            .attr("x", width / 2)
+            .attr("y", -margin.top / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16")
+            .text("Amazon Stock Prices Over Time");
+
+        // X Label
+        svg7.append("text")
+            .attr("x", width / 2)
+            .attr("y", height + margin.bottom / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "12")
+            .text("Date");
+
+        // Y Label
+        svg7.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -height / 2)
+            .attr("y", -margin.left)
+            .attr("dy", "1em")
+            .style("font-size", "12")
+            .text("Stock Price");
+    
+
+    
+})
+.catch(function(error) {
+    console.error("Error loading CSV:", error);
+});
+
+/// end of amazon_svg7/////
+
+//fifth graph//
+ //amazon_svg7//
+
+     
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg8 = d3.select("#microsoft__modified_grouped_data").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+      "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+// load data
+d3.csv(grouped_data_path)
+.then(function(data) {
+    
+    // format data
+    data.forEach(function(d) {
+        d.date = parseTime2(d.date);
+        d.Microsoft = +d.Microsoft;
+    });
+    
+    // set the ranges
+    var x = d3.scaleTime().range([0, width]);
+    var y = d3.scaleLinear().range([height, 0]);
+
+
+var valueline_Microsoft = d3.line()
+.x(function(d) { return x(d.date); })
+.y(function(d) { return y(d.Microsoft); });
+
+     // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, d3.max(data, function(d){ return d.Microsoft; })]);
+
+    // Add the valueline path.
+    // add lines
+
+    // add valueline_open
+    svg8.append("path")
+        .data([data])
+        .attr("class", "line")
+        .style("stroke", "green")
+        .attr("d", valueline_Microsoft);
+
+    // add the x-axis and y-axis
+
+    // Add the X Axis
+    svg8.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x))
+    .style("font-size", "6");
+
+    // Add the Y Axis
+    svg8.append("g")
+    .call(d3.axisLeft(y))
+    .style("font-size", "8");
+
+    // Title
+    svg8.append("text")
+            .attr("x", width / 2)
+            .attr("y", -margin.top / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16")
+            .text("Microsoft Stock Prices Over Time");
+
+        // X Label
+        svg8.append("text")
+            .attr("x", width / 2)
+            .attr("y", height + margin.bottom / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "12")
+            .text("Date");
+
+        // Y Label
+        svg8.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -height / 2)
+            .attr("y", -margin.left)
+            .attr("dy", "1em")
+            .style("font-size", "12")
+            .text("Stock Price");
+    
+
+    
+})
+.catch(function(error) {
+    console.error("Error loading CSV:", error);
+});
+
+// end of microsoft_svg8 //
+
+//fifth graph//
+ //ibm_svg9//
+
+     
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg9 = d3.select("#ibm__modified_grouped_data").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+      "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+// load data
+d3.csv(grouped_data_path)
+.then(function(data) {
+    
+    // format data
+    data.forEach(function(d) {
+        d.date = parseTime2(d.date);
+        d.IBM = +d.IBM;
+    });
+    
+    // set the ranges
+    var x = d3.scaleTime().range([0, width]);
+    var y = d3.scaleLinear().range([height, 0]);
+
+
+var valueline_IBM = d3.line()
+.x(function(d) { return x(d.date); })
+.y(function(d) { return y(d.IBM); });
+
+     // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, d3.max(data, function(d){ return d.IBM; })]);
+
+    // Add the valueline path.
+    // add lines
+
+    // add valueline_open
+    svg9.append("path")
+        .data([data])
+        .attr("class", "line")
+        .style("stroke", "#800080")
+        .attr("d", valueline_IBM);
+
+    // add the x-axis and y-axis
+
+    // Add the X Axis
+    svg9.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x))
+    .style("font-size", "6");
+
+    // Add the Y Axis
+    svg9.append("g")
+    .call(d3.axisLeft(y))
+    .style("font-size", "8");
+
+    // Title
+    svg9.append("text")
+            .attr("x", width / 2)
+            .attr("y", -margin.top / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16")
+            .text("IBM Stock Prices Over Time");
+
+        // X Label
+        svg9.append("text")
+            .attr("x", width / 2)
+            .attr("y", height + margin.bottom / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "12")
+            .text("Date");
+
+        // Y Label
+        svg9.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -height / 2)
+            .attr("y", -margin.left)
+            .attr("dy", "1em")
+            .style("font-size", "12")
+            .text("Stock Price");
+    
+
+    
+})
+.catch(function(error) {
+    console.error("Error loading CSV:", error);
+});
+
+// end of IBM_svg9 //
+
+//fifth graph//
+ //amazon_svg7//
+
+     
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg10 = d3.select("#facebook__modified_grouped_data").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+      "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+// load data
+d3.csv(grouped_data_path)
+.then(function(data) {
+    
+    // format data
+    data.forEach(function(d) {
+        d.date = parseTime2(d.date);
+        d.Facebook = +d.Facebook;
+    });
+    
+    // set the ranges
+    var x = d3.scaleTime().range([0, width]);
+    var y = d3.scaleLinear().range([height, 0]);
+
+
+var valueline_Facebook = d3.line()
+.x(function(d) { return x(d.date); })
+.y(function(d) { return y(d.Facebook); });
+
+     // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, d3.max(data, function(d){ return d.Facebook; })]);
+
+    // Add the valueline path.
+    // add lines
+
+    // add valueline_open
+    svg10.append("path")
+        .data([data])
+        .attr("class", "line")
+        .style("stroke", "#BB830C")
+        .attr("d", valueline_Facebook);
+
+    // add the x-axis and y-axis
+
+    // Add the X Axis
+    svg10.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x))
+    .style("font-size", "6");
+
+    // Add the Y Axis
+    svg10.append("g")
+    .call(d3.axisLeft(y))
+    .style("font-size", "8");
+
+    // Title
+    svg10.append("text")
+            .attr("x", width / 2)
+            .attr("y", -margin.top / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16")
+            .text("Facebook Stock Prices Over Time");
+
+        // X Label
+        svg10.append("text")
+            .attr("x", width / 2)
+            .attr("y", height + margin.bottom / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "12")
+            .text("Date");
+
+        // Y Label
+        svg10.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -height / 2)
+            .attr("y", -margin.left)
+            .attr("dy", "1em")
+            .style("font-size", "12")
+            .text("Stock Price");
+    
+
+    
+})
+.catch(function(error) {
+    console.error("Error loading CSV:", error);
+});
+
+// end of Facebook_svg10 //
+
+
+
+        
+
+    </script>
+</body>
+</html>
